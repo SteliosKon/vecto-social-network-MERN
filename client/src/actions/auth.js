@@ -8,6 +8,7 @@ import {
   AUTH_ERROR,
   USER_LOADED,
   LOGOUT,
+  CLEAR_PROFILE,
 } from './types';
 
 // x-auth-token
@@ -82,4 +83,5 @@ export const login = (email, password) => async (dispatch) => {
 // LOGOUT CLEAR EVERYTHING
 export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
+  dispatch({ type: CLEAR_PROFILE });
 };
