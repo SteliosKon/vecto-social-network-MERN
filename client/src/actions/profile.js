@@ -5,7 +5,6 @@ import {
   DELETE_ACCOUNT,
   CLEAR_PROFILE,
   GET_ALL_PROFILES,
-  GET_REPOS,
 } from './types';
 import axios from 'axios';
 import { setAlert } from './alert';
@@ -53,22 +52,6 @@ export const getAllProfiles = () => async (dispatch) => {
     const res = await axios.get('/api/profile');
     dispatch({
       type: GET_ALL_PROFILES,
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
-
-//Gets Github repos
-export const getGithubRepos = (username) => async (dispatch) => {
-  try {
-    const res = await axios.get(`/api/profile/github/${username}`);
-    dispatch({
-      type: GET_REPOS,
       payload: res.data,
     });
   } catch (err) {

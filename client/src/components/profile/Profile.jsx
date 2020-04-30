@@ -13,22 +13,21 @@ import ProfileTop from './ProfileTop.jsx';
 import ProfileAbout from './ProfileAbout.jsx';
 import ProfileEducation from './ProfileEducation.jsx';
 import ProfileExperience from './ProfileExperience.jsx';
-import ProfileGithub from './ProfileGithub.jsx';
 
-const Profile = ({ getProfileById, profile: { profile }, auth, match }) => {
-  /*
-   use a nullProfile boolean to safely add to useEffect
-   adding profile to useEffect would trigger the function
-   as profile is an object and object's are reference types
-*/
-  const nullProfile = !profile;
-  useEffect(() => {
-    getProfileById(match.params.id);
-  }, [getProfileById, match.params.id, nullProfile]);
+//instead of props.match we use destructure to match
+
+const Profile = ({ match, getProfileById, profile: { profile }, auth }) => {
+  useEffect(
+    () => {
+      getProfileById(match.params.id);
+    },
+    [getProfileById],
+    match.params.id
+  );
 
   return (
     <Fragment>
-      {profile === null ? (
+      {profile === null || profile.loading ? (
         <Spinner />
       ) : (
         <Fragment>
@@ -43,21 +42,26 @@ const Profile = ({ getProfileById, profile: { profile }, auth, match }) => {
               </Link>
             )}
           <div className='profile-grid my-1'>
+            {/* Top */}
             <ProfileTop profile={profile} />
+            {/* About */}
+
             <ProfileAbout profile={profile} />
+
+            {/* Experience */}
             <div className='profile-exp bg-white p-2'>
               <h2 className='text-primary'>Experience</h2>
               {profile.experience.length > 0 ? (
                 <Fragment>
-                  {profile.experience.map((experience) => (
-                    <ProfileExperience
-                      key={experience._id}
-                      experience={experience}
-                    />
+                  {' '}
+                  {profile.experience.map((exp) => (
+                    <ProfileExperience experience={exp} key={exp._id} />
                   ))}
                 </Fragment>
               ) : (
-                <h4>No experience credentials</h4>
+                <Fragment>
+                  <h4>No experience added yet...</h4>
+                </Fragment>
               )}
             </div>
 
@@ -65,21 +69,17 @@ const Profile = ({ getProfileById, profile: { profile }, auth, match }) => {
               <h2 className='text-primary'>Education</h2>
               {profile.education.length > 0 ? (
                 <Fragment>
-                  {profile.education.map((education) => (
-                    <ProfileEducation
-                      key={education._id}
-                      education={education}
-                    />
+                  {' '}
+                  {profile.education.map((edu) => (
+                    <ProfileEducation education={edu} key={edu._id} />
                   ))}
                 </Fragment>
               ) : (
-                <h4>No education credentials</h4>
+                <Fragment>
+                  <h4>No education added yet...</h4>
+                </Fragment>
               )}
             </div>
-
-            {profile.githubusername && (
-              <ProfileGithub username={profile.githubusername} />
-            )}
           </div>
         </Fragment>
       )}
