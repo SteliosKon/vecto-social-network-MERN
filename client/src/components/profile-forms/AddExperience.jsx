@@ -11,7 +11,7 @@ const AddExperience = ({ addExperience, history }) => {
     location: '',
     from: '',
     to: '',
-    current: 'false',
+    current: false,
     description: '',
   };
   const [formData, setFormData] = useState(initialState);

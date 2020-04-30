@@ -11,7 +11,7 @@ const AddEducation = ({ addEducation, history }) => {
     fieldofstudy: '',
     from: '',
     to: '',
-    current: 'false',
+    current: false,
     description: '',
   };
   const [formData, setFormData] = useState(initialState);
@@ -137,4 +137,4 @@ AddEducation.propTypes = {
   addEducation: PropTypes.func.isRequired,
 };
 
-export default connect(null, { addEducation })(AddEducation);
+export default connect(null, { addEducation })(withRouter(AddEducation));
