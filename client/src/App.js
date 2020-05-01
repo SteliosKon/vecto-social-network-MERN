@@ -12,6 +12,7 @@ import Navbar from './components/layout/Navbar.jsx';
 import Landing from './components/layout/Landing.jsx';
 import Alert from './components/layout/Alert.jsx';
 import Login from './components/auth/Login.jsx';
+import NewLogin from './components/auth/NewLogin.jsx';
 import Register from './components/auth/Register.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import CreateProfile from './components/profile-forms/CreateProfile.jsx';
@@ -20,6 +21,7 @@ import AddExperience from './components/profile-forms/AddExperience.jsx';
 import AddEducation from './components/profile-forms/AddEducation.jsx';
 import Profiles from './components/profiles/Profiles.jsx';
 import Profile from './components/profile/Profile.jsx';
+
 
 //Action
 import { loadUser } from './actions/auth';
@@ -44,7 +46,7 @@ const App = () => {
             <Alert />
             <Switch>
               <Route exact path='/register' component={Register} />
-              <Route exact path='/login' component={Login} />
+              <Route exact path='/login' component={NewLogin} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <Route exact path='/create-profile' component={CreateProfile} />
               <Route exact path='/profiles' component={Profiles} />
