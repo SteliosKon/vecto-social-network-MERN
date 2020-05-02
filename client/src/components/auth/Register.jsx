@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState,useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // connect redux to component , needs export
@@ -8,13 +8,19 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 
-const Register = ({ setAlert, register, isAuthenticated }) => {
+const Register = ({ setAlert, register, isAuthenticated ,setIsNavBarHidden}) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
     password2: '',
   });
+  useEffect(()=>{
+    setIsNavBarHidden(true);
+    return () => {
+      setIsNavBarHidden(false);
+    }
+  },[ setIsNavBarHidden])
 
   const { name, email, password, password2 } = formData;
   // a way to use on change for every field!
@@ -104,6 +110,7 @@ Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  setIsNavBarHidden:PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

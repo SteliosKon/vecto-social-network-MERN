@@ -48,15 +48,20 @@ const App = () => {
         { (isNavBarHidden) ? null : <Navbar /> }
 
           <Alert />
+
+          {/* Outside Container  */}
+
             <Switch>
-              {/* Outside Container  */}
-              <Route exact path='/register' component={Register} />
+              <Route exact path='/register' render={props=>(<Register {...props} setIsNavBarHidden={setIsNavBarHidden}  />)} />
               <Route exact path='/login' render={props=>(<NewLogin {...props} setIsNavBarHidden={setIsNavBarHidden}  />)} />
+              </Switch>
 
               {/* Inside Container */}
+
               <section className='container'>
+              <Switch>
+                {/* Outside Container  */}
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              {/* <PrivateRoute exact path='/dashboard' render={()=>(<Dashboard  setIsNavBarHidden={setIsNavBarHidden}  />)} /> */}
               <Route exact path='/create-profile' component={CreateProfile} />
               <Route exact path='/profiles' component={Profiles} />
               <Route exact path='/profile/:id' component={Profile} />
@@ -75,8 +80,9 @@ const App = () => {
                 path='/add-education'
                 component={AddEducation}
               />
+              </Switch>
               </section>
-            </Switch>
+            
           
         </Fragment>
       </Router>

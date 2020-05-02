@@ -5,7 +5,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 const PrivateRoute = ({
   component: Component,
-  auth: { isAuthenticated, loading },
+  isAuthenticated, loading ,
   ...rest
 }) => (
   <Route
@@ -21,11 +21,15 @@ const PrivateRoute = ({
 );
 
 PrivateRoute.propTypes = {
-  auth: PropTypes.object.isRequired,
+ 
+  isAuthenticated: PropTypes.bool,
+  Loading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
+  
+  isAuthenticated: state.auth.isAuthenticated,
+  Loading: state.auth.Loading,
 });
 
 export default connect(mapStateToProps)(PrivateRoute);
