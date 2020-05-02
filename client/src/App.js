@@ -11,8 +11,7 @@ import setAuthToken from './utils/setAuthToken';
 import Navbar from './components/layout/Navbar.jsx';
 import Landing from './components/layout/Landing.jsx';
 import Alert from './components/layout/Alert.jsx';
-// import Login from './components/auth/Login.jsx';
-import NewLogin from './components/auth/NewLogin.jsx';
+import Login from './components/auth/Login.jsx';
 import Register from './components/auth/Register.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import CreateProfile from './components/profile-forms/CreateProfile.jsx';
@@ -53,7 +52,7 @@ const App = () => {
 
             <Switch>
               <Route exact path='/register' render={props=>(<Register {...props} setIsNavBarHidden={setIsNavBarHidden}  />)} />
-              <Route exact path='/login' render={props=>(<NewLogin {...props} setIsNavBarHidden={setIsNavBarHidden}  />)} />
+              <Route exact path='/login' render={props=>(<Login {...props} setIsNavBarHidden={setIsNavBarHidden}  />)} />
               </Switch>
 
               {/* Inside Container */}
