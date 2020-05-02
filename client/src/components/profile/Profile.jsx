@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 //Actions
 import { getProfileById } from '../../actions/profile';
-import auth from '../../reducers/auth';
+// import auth from '../../reducers/auth';
 //Components
 import ProfileTop from './ProfileTop.jsx';
 import ProfileAbout from './ProfileAbout.jsx';
@@ -21,8 +21,8 @@ const Profile = ({ match, getProfileById, profile: { profile }, auth }) => {
     () => {
       getProfileById(match.params.id);
     },
-    [getProfileById],
-    match.params.id
+    [getProfileById,match.params.id],
+    
   );
 
   return (

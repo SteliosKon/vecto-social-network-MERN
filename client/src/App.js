@@ -1,5 +1,5 @@
 //React
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect,useState } from 'react';
 //Router
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/routing/PrivateRoute.jsx';
@@ -11,7 +11,7 @@ import setAuthToken from './utils/setAuthToken';
 import Navbar from './components/layout/Navbar.jsx';
 import Landing from './components/layout/Landing.jsx';
 import Alert from './components/layout/Alert.jsx';
-import Login from './components/auth/Login.jsx';
+// import Login from './components/auth/Login.jsx';
 import NewLogin from './components/auth/NewLogin.jsx';
 import Register from './components/auth/Register.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
@@ -33,6 +33,9 @@ if (localStorage.token) {
 }
 
 const App = () => {
+
+  const[isNavBarHidden,setIsNavBarHidden]=useState(false);
+
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
@@ -40,14 +43,20 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <Navbar></Navbar>
-          <Route exact path='/' component={Landing} />
-          <section className='container'>
-            <Alert />
+        <Route exact path='/' component={Landing} />
+
+        { (isNavBarHidden) ? null : <Navbar /> }
+
+          <Alert />
             <Switch>
+              {/* Outside Container  */}
               <Route exact path='/register' component={Register} />
-              <Route exact path='/login' component={NewLogin} />
+              <Route exact path='/login' render={props=>(<NewLogin {...props} setIsNavBarHidden={setIsNavBarHidden}  />)} />
+
+              {/* Inside Container */}
+              <section className='container'>
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              {/* <PrivateRoute exact path='/dashboard' render={()=>(<Dashboard  setIsNavBarHidden={setIsNavBarHidden}  />)} /> */}
               <Route exact path='/create-profile' component={CreateProfile} />
               <Route exact path='/profiles' component={Profiles} />
               <Route exact path='/profile/:id' component={Profile} />
@@ -66,8 +75,9 @@ const App = () => {
                 path='/add-education'
                 component={AddEducation}
               />
+              </section>
             </Switch>
-          </section>
+          
         </Fragment>
       </Router>
     </Provider>
