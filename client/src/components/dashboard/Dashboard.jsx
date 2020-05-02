@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+//CSS
+
+import '../../App.css'
 //GIF
 import Spinner from '../layout/Spinner';
 
@@ -27,7 +30,8 @@ const Dashboard = ({
   return loading && profile === null ? (
     <Spinner />
   ) : (
-    <Fragment>
+    <Fragment >
+      <section className='container'>
       <h1 className='large text-primary'>Dashboard</h1>
       <p className='lead'>
         <i className='fas fa-user'>Welcome {user && user.name}</i>
@@ -54,6 +58,7 @@ const Dashboard = ({
           </Link>
         </Fragment>
       )}
+      </section>
     </Fragment>
   );
 };

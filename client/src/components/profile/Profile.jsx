@@ -31,6 +31,7 @@ const Profile = ({ match, getProfileById, profile: { profile }, auth }) => {
         <Spinner />
       ) : (
         <Fragment>
+          <section className='container'>
           <Link to='/profiles' className='btn btn-light'>
             Back To Profiles
           </Link>
@@ -81,6 +82,7 @@ const Profile = ({ match, getProfileById, profile: { profile }, auth }) => {
               )}
             </div>
           </div>
+          </section>
         </Fragment>
       )}
     </Fragment>

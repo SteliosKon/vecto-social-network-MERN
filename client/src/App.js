@@ -24,8 +24,8 @@ import Profile from './components/profile/Profile.jsx';
 
 //Action
 import { loadUser } from './actions/auth';
-// CSS
-import './App.css';
+// // CSS
+// import './App.css';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -43,23 +43,13 @@ const App = () => {
       <Router>
         <Fragment>
         <Route exact path='/' component={Landing} />
-
         { (isNavBarHidden) ? null : <Navbar /> }
-
           <Alert />
-
-          {/* Outside Container  */}
-
-            <Switch>
+              
+              <Switch>
+               
               <Route exact path='/register' render={props=>(<Register {...props} setIsNavBarHidden={setIsNavBarHidden}  />)} />
               <Route exact path='/login' render={props=>(<Login {...props} setIsNavBarHidden={setIsNavBarHidden}  />)} />
-              </Switch>
-
-              {/* Inside Container */}
-
-              <section className='container'>
-              <Switch>
-                {/* Outside Container  */}
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <Route exact path='/create-profile' component={CreateProfile} />
               <Route exact path='/profiles' component={Profiles} />
@@ -80,7 +70,7 @@ const App = () => {
                 component={AddEducation}
               />
               </Switch>
-              </section>
+            
             
           
         </Fragment>

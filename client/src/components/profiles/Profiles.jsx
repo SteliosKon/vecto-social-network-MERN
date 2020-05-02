@@ -22,6 +22,7 @@ const Profiles = ({ profile: { profiles, loading }, getAllProfiles }) => {
         <Spinner />
       ) : (
         <Fragment>
+          <section className='container'>
           <h1>Developers</h1>
           <p className='lead'>
             <i className='fab fa-connectdevelop'>Connect with others</i>
@@ -35,6 +36,7 @@ const Profiles = ({ profile: { profiles, loading }, getAllProfiles }) => {
               <h4>Profiles not found</h4>
             )}
           </div>
+          </section>
         </Fragment>
       )}
     </Fragment>
