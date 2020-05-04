@@ -162,6 +162,9 @@ img {
 .alert-primary {
   background: var(--primary-color);
   color: #fff;
+  border-radius: 112px 112px 112px 112px;
+  -moz-border-radius: 112px 112px 112px 112px;
+  -webkit-border-radius: 112px 112px 112px 112px;
 }
 
 .btn-light,
@@ -170,6 +173,9 @@ img {
 .alert-light {
   background: var(--light-color);
   color: #333;
+  border-radius: 112px 112px 112px 112px;
+  -moz-border-radius: 112px 112px 112px 112px;
+  -webkit-border-radius: 112px 112px 112px 112px;
 }
 
 .btn-dark,
@@ -226,7 +232,7 @@ img {
 
 /* Overlay */
 .dark-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   top: 0;
   left: 0;
@@ -581,4 +587,29 @@ button {
 .navbar-icon {
   width: 22px;
   height: 22px;
+}
+
+/* Blockquote */
+
+blockquote {
+  margin: 0 0 1rem;
+}
+
+.blockquote {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+}
+
+.blockquote-footer {
+  display: block;
+  font-size: 80%;
+  color: #6c757d;
+}
+
+.blockquote-footer::before {
+  content: '\2014 \00A0';
+}
+blockquote {
+  border: 0px solid #999;
+  page-break-inside: avoid;
 }

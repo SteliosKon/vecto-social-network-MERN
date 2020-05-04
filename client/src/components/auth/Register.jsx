@@ -1,10 +1,10 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// connect redux to component , needs export
+// redux
 import { connect } from 'react-redux';
 
-//actions
+// actions
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 

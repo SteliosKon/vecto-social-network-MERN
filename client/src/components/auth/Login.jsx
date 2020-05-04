@@ -31,7 +31,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <a color="inherit" href="https://gentle-badlands-06014.herokuapp.com/">
+      <a color="inherit" href="http://18.184.230.242:5000/">
         Vecto
       </a>{' '}
       {new Date().getFullYear()}
@@ -168,8 +168,9 @@ const NewLogin = ({ login, isAuthenticated, setIsNavBarHidden }) => {
                   </Link>
                 </Grid>
                 <Grid item>
+                  {"Don't have an account? "}
                   <Link to="/register" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                    {'Sign Up'}
                   </Link>
                 </Grid>
               </Grid>

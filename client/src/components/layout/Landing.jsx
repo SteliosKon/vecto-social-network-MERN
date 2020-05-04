@@ -1,37 +1,39 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
+// CSS
+import '../../App.css';
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
   return (
-    <section className="landing">
-      <div className="dark-overlay">
-        <div className="landing-inner">
-          <h1 className="x-large">Vecto</h1>
-          <blockquote class="blockquote text-center">
-            <p className="lead">
-              Its the not the Destination, It's the journey.
-              <footer className="blockquote-footer">
-                <h5> -Ralph Waldo Emerson </h5>
-              </footer>
-            </p>
-          </blockquote>
-
-          <div className="buttons">
-            <Link to="/register" className="btn btn-primary">
-              Sign Up
-            </Link>
-            <Link to="/login" className="btn btn-light">
-              Login
-            </Link>
+    <Fragment>
+      <section className="landing">
+        <div className="dark-overlay">
+          <div className="landing-inner">
+            <h1 className="x-large primary">Vecto</h1>
+            <blockquote className="blockquote">
+              <p className="mb-0">
+                It's the not the Destination, It's the journey.
+              </p>
+              <footer className="blockquote-footer">Ralph Waldo Emerson</footer>
+            </blockquote>
+            <div className="buttons">
+              <Link to="/login" className="btn btn-primary">
+                Login
+              </Link>
+              <Link to="/register" className="btn btn-light">
+                Sign Up
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </Fragment>
   );
 };
 Landing.propTypes = {

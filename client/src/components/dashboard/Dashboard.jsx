@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 //CSS
 
-import '../../App.css'
+import '../../App.css';
 //GIF
 import Spinner from '../layout/Spinner';
 
@@ -30,34 +30,37 @@ const Dashboard = ({
   return loading && profile === null ? (
     <Spinner />
   ) : (
-    <Fragment >
-      <section className='container'>
-      <h1 className='large text-primary'>Dashboard</h1>
-      <p className='lead'>
-        <i className='fas fa-user'>Welcome {user && user.name}</i>
-      </p>
-      {profile !== null ? (
-        <Fragment>
-          <DashboardActions />
-          <DashboardExperience experience={profile.experience} />
-          <DashboardEducation education={profile.education} />
-          <br />
-          <br />
-          <div className='my-2'>
-            <button className='btn btn-danger' onClick={() => deleteAccount()}>
-              <i className='fas fa-user-minus'> Delete my account</i>
-            </button>
-          </div>
-        </Fragment>
-      ) : (
-        <Fragment>
-          <p>You dont have an account yet!</p>
-          <Link to='/create-profile' className='btn btn-primary my-1'>
-            {' '}
-            Create Profile
-          </Link>
-        </Fragment>
-      )}
+    <Fragment>
+      <section className="container">
+        <h1 className="large text-primary">Dashboard</h1>
+        <p className="lead">
+          <i className="fas fa-user">Welcome {user && user.name}</i>
+        </p>
+        {profile !== null ? (
+          <Fragment>
+            <DashboardActions />
+            <DashboardExperience experience={profile.experience} />
+            <DashboardEducation education={profile.education} />
+            <br />
+            <br />
+            <div className="my-2">
+              <button
+                className="btn btn-danger"
+                onClick={() => deleteAccount()}
+              >
+                <i className="fas fa-user-minus"> Delete my account</i>
+              </button>
+            </div>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <p>You dont have a profile yet!</p>
+            <Link to="/create-profile" className="btn btn-primary my-1">
+              {' '}
+              Create Profile
+            </Link>
+          </Fragment>
+        )}
       </section>
     </Fragment>
   );
