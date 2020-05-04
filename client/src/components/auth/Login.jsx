@@ -1,13 +1,10 @@
-import React, { Fragment, useState,useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 
 //actions
 import { login } from '../../actions/auth';
 
-// // CSS
-// import '../../App.css';
-
 //images
-import Car from './car.jpg';
+import Car from '../../img/car.jpg';
 
 //materialUI
 import Avatar from '@material-ui/core/Avatar';
@@ -30,8 +27,6 @@ import { connect } from 'react-redux';
 //proptypes
 import PropTypes from 'prop-types';
 
-
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -48,14 +43,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   root: {
     height: '100vh',
-    overflow:'hidden'
+    overflow: 'hidden',
   },
   image: {
     backgroundImage: `url(${Car})`,
     backgroundRepeat: 'no-repeat',
     backgroundColor:
-      theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover', 
+      theme.palette.type === 'light'
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
+    backgroundSize: 'cover',
   },
   paper: {
     margin: theme.spacing(8, 4),
@@ -76,15 +73,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewLogin = ({ login, isAuthenticated,setIsNavBarHidden }) => {
-
-  useEffect(()=>{
+const NewLogin = ({ login, isAuthenticated, setIsNavBarHidden }) => {
+  useEffect(() => {
     setIsNavBarHidden(true);
     return () => {
       setIsNavBarHidden(false);
-    }
-  },[ setIsNavBarHidden])
-
+    };
+  }, [setIsNavBarHidden]);
 
   const classes = useStyles();
   const [formData, setFormData] = useState({
@@ -107,97 +102,96 @@ const NewLogin = ({ login, isAuthenticated,setIsNavBarHidden }) => {
   //Redirect if logged in
 
   if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
+    return <Redirect to="/dashboard" />;
   }
-return (
-<Fragment >
-  <Grid container component="main" className={classes.root}>
-    <CssBaseline />
-    <Grid item xs={false} sm={4} md={9} className={classes.image} />
-    <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square>
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />  
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate onSubmit={(e) => onSubmit(e)}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={email}
-            onChange={(e) => onChange(e)}
-            
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => onChange(e)}
-          />
-          {/* <FormControlLabel
+  return (
+    <Fragment>
+      <Grid container component="main" className={classes.root}>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={9} className={classes.image} />
+        <Grid item xs={12} sm={8} md={3} component={Paper} elevation={6} square>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form
+              className={classes.form}
+              noValidate
+              onSubmit={(e) => onSubmit(e)}
+            >
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={email}
+                onChange={(e) => onChange(e)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => onChange(e)}
+              />
+              {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           /> */}
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link to="!#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link to="/register" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-          <Box mt={5}>
-            <Copyright />
-          </Box>
-        </form>
-      </div>
-    </Grid>
-  </Grid>
-  </Fragment>
-);
-}
-
-
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link to="!#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link to="/register" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+              <Box mt={5}>
+                <Copyright />
+              </Box>
+            </form>
+          </div>
+        </Grid>
+      </Grid>
+    </Fragment>
+  );
+};
 
 NewLogin.prototypes = {
-    login: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool,
-    setIsNavBarHidden:PropTypes.func.isRequired,
-  };
-  
-  const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-   
-  });
-  
-  export default connect(mapStateToProps, { login })(NewLogin);
-  
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  setIsNavBarHidden: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { login })(NewLogin);

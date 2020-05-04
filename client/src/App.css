@@ -576,8 +576,9 @@ button {
   }
 }
 
-/* Login */
+/* Navbar Icon */
 
-.login{
-  overflow: hidden;
+.navbar-icon {
+  width: 22px;
+  height: 22px;
 }
