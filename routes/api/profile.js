@@ -1,11 +1,13 @@
 const express = require('express');
-const router = express.Router();
-const auth = require('../../middleware/auth');
-const { check, validationResult } = require('express-validator');
-const request = require('request');
-const config = require('config');
 
-//models
+const router = express.Router();
+const { check, validationResult } = require('express-validator');
+const auth = require('../../middleware/auth');
+
+// const request = require('request')
+// const config = require('config')
+
+//  models
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const Post = require('../../models/Post');
@@ -63,7 +65,7 @@ router.post(
       linkedin,
     } = req.body;
 
-    //Build profile object
+    //  Build profile object
 
     const profileFields = {};
     profileFields.user = res.user.id;
@@ -88,7 +90,7 @@ router.post(
 
     try {
       let profile = await Profile.findOne({ user: res.user.id });
-      //update the profile if exits
+      //  update the profile if exits
       if (profile) {
         profile = await Profile.findOneAndUpdate(
           { user: res.user.id },
@@ -97,11 +99,11 @@ router.post(
         );
         return res.json(profile); // returns here
       }
-      //Create profile if it doesnt exist
+      //  Create profile if it doesnt exist
       profile = new Profile(profileFields);
 
       await profile.save();
-      res.json(profile); //returns here
+      res.json(profile); //  returns here
     } catch (err) {
       console.error(err.message);
       res.status(500).send('server error');
@@ -137,7 +139,7 @@ router.get('/user/:user_id', async (req, res) => {
     res.json(profile);
   } catch (err) {
     console.error(err.message);
-    if (err.kind == 'ObjectId') {
+    if (err.kind === 'ObjectId') {
       return res.status(400).json({ msg: 'Profile Not found' });
     }
     res.status(500).send('Server ERrrror');
@@ -150,13 +152,13 @@ router.get('/user/:user_id', async (req, res) => {
 
 router.delete('/', auth, async (req, res) => {
   try {
-    //Remove user posts
+    //  Remove user posts
     await Post.deleteMany({ user: res.user.id });
-    //Removes profile
+    //  Removes profile
     await Profile.findOneAndRemove({
       user: res.user.id,
     });
-    //Removes user
+    //  Removes user
     await User.findOneAndRemove({
       _id: res.user.id,
     });
@@ -316,26 +318,6 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
-  }
-});
-// @route    GET api/profile/github/:username
-// @desc     Get user repos from Github
-// @access   Public
-router.get('/github/:username', async (req, res) => {
-  try {
-    const uri = encodeURI(
-      `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc`
-    );
-    const headers = {
-      'user-agent': 'node.js',
-      Authorization: `token ${config.get('githubToken')}`,
-    };
-
-    const gitHubResponse = await axios.get(uri, { headers });
-    return res.json(gitHubResponse.data);
-  } catch (err) {
-    console.error(err.message);
-    return res.status(404).json({ msg: 'No Github profile found' });
   }
 });
 

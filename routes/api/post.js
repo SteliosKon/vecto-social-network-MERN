@@ -1,16 +1,17 @@
 const express = require('express');
+
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 
-//models
+//  models
 // const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const Post = require('../../models/Post');
 
-//  @route      Post api/posts
-//  @desc       Create a post
-//  @access     Private
+//  @route  Post api/posts
+//  @desc   Create a post
+//  @access Private
 
 router.post(
   '/',
@@ -199,7 +200,7 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 
     // Pull out comment
     const comment = post.comments.find(
-      (comment) => comment.id === req.params.comment_id
+      (com) => com.id === req.params.comment_id
     );
     // Make sure comment exists
     if (!comment) {

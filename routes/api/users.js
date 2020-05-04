@@ -1,11 +1,16 @@
 const express = require('express');
+
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const User = require('../../models/User');
+
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+
+// Models
+const User = require('../../models/User');
+
 //  @route      Post api/users
 //  @desc       User registration
 //  @access     Public
@@ -13,13 +18,11 @@ const config = require('config');
 router.post(
   '/',
   [
-    check('name', 'Name is required!')
-      .not()
-      .isEmpty(),
+    check('name', 'Name is required!').not().isEmpty(),
     check('email', 'Please include a valid email!').isEmail(),
     check('password', 'Password must have 6 or more characters').isLength({
-      min: 6
-    })
+      min: 6,
+    }),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -41,14 +44,14 @@ router.post(
       const avatar = gravatar.url(email, {
         s: 200, // default size
         r: 'pg', // pg-rating, non nude .. etc
-        d: 'mm' // default image
+        d: 'mm', // default image
       });
 
       user = new User({
         name,
         email,
         avatar,
-        password
+        password,
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -58,8 +61,8 @@ router.post(
 
       const payload = {
         user: {
-          id: user.id
-        }
+          id: user.id,
+        },
       };
 
       jwt.sign(
