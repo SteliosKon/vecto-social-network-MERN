@@ -358,11 +358,11 @@ button {
 /* Profiles Page */
 .profile {
   display: grid;
-  grid-template-columns: 2fr 4fr 2fr;
+  grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
   grid-gap: 2rem;
   padding: 1rem;
-  line-height: 1.8;
+  line-height: 1.75;
   margin-bottom: 1rem;
 }
 

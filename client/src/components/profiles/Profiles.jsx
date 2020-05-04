@@ -22,20 +22,20 @@ const Profiles = ({ profile: { profiles, loading }, getAllProfiles }) => {
         <Spinner />
       ) : (
         <Fragment>
-          <section className='container'>
-          <h1>Developers</h1>
-          <p className='lead'>
-            <i className='fab fa-connectdevelop'>Connect with others</i>
-          </p>
-          <div className='profiles'>
-            {profiles.length > 0 ? (
-              profiles.map((profile) => (
-                <ProfileItem key={profile._id} profile={profile}></ProfileItem>
-              ))
-            ) : (
-              <h4>Profiles not found</h4>
-            )}
-          </div>
+          <section className="container">
+            <p className="lead">Connect with others</p>
+            <div className="profiles">
+              {profiles.length > 0 ? (
+                profiles.map((profile) => (
+                  <ProfileItem
+                    key={profile._id}
+                    profile={profile}
+                  ></ProfileItem>
+                ))
+              ) : (
+                <h4>Profiles not found</h4>
+              )}
+            </div>
           </section>
         </Fragment>
       )}
