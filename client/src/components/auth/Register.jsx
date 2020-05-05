@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -56,12 +56,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Register = ({
-  setAlert,
-  register,
-  isAuthenticated,
-  setIsNavBarHidden,
-}) => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
@@ -70,12 +65,6 @@ const Register = ({
     password: '',
     password2: '',
   });
-  useEffect(() => {
-    setIsNavBarHidden(true);
-    return () => {
-      setIsNavBarHidden(false);
-    };
-  }, [setIsNavBarHidden]);
 
   const { name, email, password, password2 } = formData;
   // a way to use on change for every field!
