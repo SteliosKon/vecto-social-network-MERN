@@ -1,5 +1,5 @@
 //React
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 //Router
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/routing/PrivateRoute.jsx';
@@ -12,8 +12,7 @@ import Navbar from './components/layout/Navbar.jsx';
 import Landing from './components/layout/Landing.jsx';
 import Alert from './components/layout/Alert.jsx';
 import Login from './components/auth/Login.jsx';
-// import Register from './components/auth/Register.jsx';
-import NewRegister from './components/auth/NewRegister.jsx';
+import Register from './components/auth/Register.jsx';
 import Dashboard from './components/dashboard/Dashboard.jsx';
 import CreateProfile from './components/profile-forms/CreateProfile.jsx';
 import EditProfile from './components/profile-forms/EditProfile.jsx';
@@ -32,8 +31,6 @@ if (localStorage.token) {
 }
 
 const App = () => {
-  const [isNavBarHidden, setIsNavBarHidden] = useState(false);
-
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
@@ -42,24 +39,12 @@ const App = () => {
       <Router>
         <Fragment>
           <Route exact path="/" component={Landing} />
-          {isNavBarHidden ? null : <Navbar />}
+          <Navbar />
           <Alert />
 
           <Switch>
-            <Route
-              exact
-              path="/register"
-              render={(props) => (
-                <NewRegister {...props} setIsNavBarHidden={setIsNavBarHidden} />
-              )}
-            />
-            <Route
-              exact
-              path="/login"
-              render={(props) => (
-                <Login {...props} setIsNavBarHidden={setIsNavBarHidden} />
-              )}
-            />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <Route exact path="/create-profile" component={CreateProfile} />
             <Route exact path="/profiles" component={Profiles} />

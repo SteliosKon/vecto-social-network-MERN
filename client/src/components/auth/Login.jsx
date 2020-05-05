@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 
 //actions
 import { login } from '../../actions/auth';
@@ -73,14 +73,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewLogin = ({ login, isAuthenticated, setIsNavBarHidden }) => {
-  useEffect(() => {
-    setIsNavBarHidden(true);
-    return () => {
-      setIsNavBarHidden(false);
-    };
-  }, [setIsNavBarHidden]);
-
+const Login = ({ login, isAuthenticated }) => {
   const classes = useStyles();
   const [formData, setFormData] = useState({
     email: '',
@@ -185,14 +178,13 @@ const NewLogin = ({ login, isAuthenticated, setIsNavBarHidden }) => {
   );
 };
 
-NewLogin.prototypes = {
+Login.prototypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
-  setIsNavBarHidden: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { login })(NewLogin);
+export default connect(mapStateToProps, { login })(Login);
