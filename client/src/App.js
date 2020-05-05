@@ -20,6 +20,7 @@ import AddExperience from './components/profile-forms/AddExperience.jsx';
 import AddEducation from './components/profile-forms/AddEducation.jsx';
 import Profiles from './components/profiles/Profiles.jsx';
 import Profile from './components/profile/Profile.jsx';
+import Posts from './components/posts/Posts.jsx';
 
 //Action
 import { loadUser } from './actions/auth';
@@ -49,6 +50,7 @@ const App = () => {
               <Route exact path='/create-profile' component={CreateProfile} />
               <Route exact path='/profiles' component={Profiles} />
               <Route exact path='/profile/:id' component={Profile} />
+              <PrivateRoute exact path='/posts' component={Posts} />
               <PrivateRoute
                 exact
                 path='/edit-profile'
