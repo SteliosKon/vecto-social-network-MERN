@@ -18,8 +18,10 @@ const Navbar = ({
   const authLinks = (
     <ul>
       <li>
+        <Link to="/posts">Posts</Link>
+      </li>
+      <li>
         <Link to="/dashboard">
-          <i className="fas fa-user"></i>{' '}
           <span className="hide-sm">Dashboard</span>
         </Link>
       </li>
@@ -50,7 +52,9 @@ const Navbar = ({
 
   return (
     <Fragment>
-      {pathname === '/login' || pathname === '/register' ? null : (
+      {pathname === '/login' ||
+      pathname === '/register' ||
+      pathname === '/' ? null : (
         <Fragment>
           <nav className="navbar bg-dark">
             <h1>

@@ -9,13 +9,33 @@ const PostSchema = new Schema({
   },
   text: {
     type: String,
-    required: true,
   },
-  name: {
+  title: {
     type: String,
+    required: true,
   },
   avatar: {
     type: String,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+  from: {
+    type: String,
+    required: true,
+  },
+  to: {
+    type: String,
+    required: true,
+  },
+  when: {
+    type: String,
+    required: true,
+  },
+  offering: {
+    type: Boolean,
+    required: true,
   },
   likes: [
     {
@@ -41,7 +61,7 @@ const PostSchema = new Schema({
       avatar: {
         type: String,
       },
-      data: {
+      dat: {
         type: Date,
         default: Date.now,
       },

@@ -20,7 +20,7 @@ import AddExperience from './components/profile-forms/AddExperience.jsx';
 import AddEducation from './components/profile-forms/AddEducation.jsx';
 import Profiles from './components/profiles/Profiles.jsx';
 import Profile from './components/profile/Profile.jsx';
-
+import Posts from './components/posts/Posts.jsx';
 //Action
 import { loadUser } from './actions/auth';
 // // CSS
@@ -60,6 +60,7 @@ const App = () => {
               path="/add-education"
               component={AddEducation}
             />
+            <PrivateRoute exact path="/posts" component={Posts} />
           </Switch>
         </Fragment>
       </Router>
