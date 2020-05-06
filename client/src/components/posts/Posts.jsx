@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 //  Actions
 import { getAllPosts } from '../../actions/post';
 //  Components
-import Post from './Post.jsx';
+import PostItem from './PostItem.jsx';
 //  GIF
 import Spinner from '../layout/Spinner';
 
@@ -24,7 +24,7 @@ const Posts = ({ getAllPosts, post: { posts, loading } }) => {
           <div className="container">
             {posts.map((post, index) => (
               <div key={index} className="p-1">
-                <Post post={post}></Post>
+                <PostItem key={post._id} post={post}></PostItem>
               </div>
             ))}
           </div>
