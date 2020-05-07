@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 //  materialUi
@@ -71,14 +71,14 @@ const PostItem = ({
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar}>
-                R
+                <Link to={`/profile/${user}`}>
+                  {name.charAt(0).toUpperCase()}
+                </Link>
               </Avatar>
             }
             action={
-              <IconButton aria-label="settings">
-                {!auth.loading && user === auth.user._id && (
-                  <DeleteIcon onClick={() => deletePost(_id)} />
-                )}
+              <IconButton aria-label="settings" onClick={() => deletePost(_id)}>
+                {!auth.loading && user === auth.user._id && <DeleteIcon />}
               </IconButton>
             }
             title={name}
@@ -91,7 +91,7 @@ const PostItem = ({
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton aria-label="like">
+            <IconButton onClick={() => addLike(_id)} aria-label="like">
               <ThumbUpAltOutlinedIcon />
               <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
             </IconButton>
@@ -120,13 +120,23 @@ const PostItem = ({
   );
 };
 
+PostItem.defaultProps = {
+  showActions: true,
+};
+
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  addLike: PropTypes.func.isRequired,
+  removeLike: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
+  showActions: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, { deletePost })(PostItem);
+
+export default connect(mapStateToProps, { addLike, removeLike, deletePost })(
+  PostItem
+);

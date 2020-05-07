@@ -26,11 +26,13 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
+          <br />
+          <br />
+          <Alert />
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route component={Routes} />
           </Switch>
-          <Alert />
         </Fragment>
       </Router>
     </Provider>
