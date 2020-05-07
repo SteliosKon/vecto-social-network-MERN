@@ -23,15 +23,10 @@ import Profile from './components/profile/Profile.jsx';
 import Posts from './components/posts/Posts.jsx';
 //Action
 import { loadUser } from './actions/auth';
-// // CSS
-// import './App.css';
-
-if (localStorage.token) {
-  setAuthToken(localStorage.token);
-}
 
 const App = () => {
   useEffect(() => {
+    setAuthToken(localStorage.token);
     store.dispatch(loadUser());
   }, []);
   return (
