@@ -4,7 +4,7 @@ import {
   UPDATE_PROFILE,
   DELETE_ACCOUNT,
   CLEAR_PROFILE,
-  GET_ALL_PROFILES,
+  GET_PROFILES,
 } from './types';
 import axios from 'axios';
 import { setAlert } from './alert';
@@ -51,7 +51,7 @@ export const getAllProfiles = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/profile');
     dispatch({
-      type: GET_ALL_PROFILES,
+      type: GET_PROFILES,
       payload: res.data,
     });
   } catch (err) {

@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 //  materialUi
-import { palette } from '@material-ui/system';
+import DeleteIcon from '@material-ui/icons/Delete';
+import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -16,16 +18,15 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-//
+//  Actions
+import { deletePost } from '../../actions/post';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 800,
-    backgroundColor: '#3f51b5',
-    color: 'white',
+    backgroundColor: 'white',
+    color: 'black',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -42,66 +43,79 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PostItem = ({ post, auth }) => {
-  const { text, name, likes, comments } = post;
+const PostItem = ({
+  deletePost,
+  post: { _id, text, name, avatar, user, likes, comments, date },
+  auth,
+}) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+
+  const onClick = (id) => {
+    deletePost(id);
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  return (
-    <Fragment className="container">
-      <Card className={classes.root}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              R
-            </Avatar>
-          }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          }
-          title={name}
-          subheader="Date created"
-        />
+  const formatedDate = (
+    <Fragment>
+      <Moment fromNow>{date}</Moment>
+    </Fragment>
+  );
 
-        <CardContent>
-          <Typography variant="body2" color="textPrimary" component="p">
-            {text}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+  return (
+    <Fragment>
+      <div className="container">
+        <Card className={classes.root} variant="outlined">
+          <CardHeader
+            avatar={
+              <Avatar aria-label="recipe" className={classes.avatar}>
+                R
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                {!auth.loading && user === auth.user._id && (
+                  <DeleteIcon onClick={() => onClick(_id)} />
+                )}
+              </IconButton>
+            }
+            title={name}
+            subheader={formatedDate}
+          />
+
           <CardContent>
-            <Typography paragraph>Method:</Typography>
-            <Typography paragraph>
-              Heat 1/2 cup of the broth in a pot until simmering, add saffron
-              and set aside for 10 minutes.
+            <Typography variant="body2" color="textPrimary" component="p">
+              {text}
             </Typography>
           </CardContent>
-        </Collapse>
-      </Card>
+          <CardActions disableSpacing>
+            <IconButton aria-label="like">
+              <ThumbUpAltOutlinedIcon />
+            </IconButton>
+            <IconButton aria-label="dislike">
+              <ThumbDownAltOutlinedIcon />
+            </IconButton>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography paragraph>Comments</Typography>
+            </CardContent>
+          </Collapse>
+        </Card>
+      </div>
     </Fragment>
   );
 };
@@ -109,9 +123,10 @@ const PostItem = ({ post, auth }) => {
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
+  deletePost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-export default connect(mapStateToProps, {})(PostItem);
+export default connect(mapStateToProps, { deletePost })(PostItem);

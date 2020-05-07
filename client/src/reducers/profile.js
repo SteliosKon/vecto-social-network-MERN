@@ -3,13 +3,12 @@ import {
   PROFILE_ERROR,
   CLEAR_PROFILE,
   UPDATE_PROFILE,
-  GET_ALL_PROFILES,
+  GET_PROFILES,
 } from '../actions/types';
 
 const initialState = {
-  profile: null, // contains profile data
-  profiles: [], // profile listing page
-  repos: [], //github repos
+  profile: null,
+  profiles: [],
   loading: true,
   error: {},
 };
@@ -25,7 +24,7 @@ export default function (state = initialState, action) {
         profile: payload,
         loading: false,
       };
-    case GET_ALL_PROFILES:
+    case GET_PROFILES:
       return {
         ...state,
         profiles: payload,
@@ -42,7 +41,6 @@ export default function (state = initialState, action) {
       return {
         ...state,
         profile: null,
-        repos: [],
       };
     default:
       return state;

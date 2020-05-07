@@ -5,43 +5,21 @@ const { Schema } = mongoose;
 const PostSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'users',
   },
   text: {
     type: String,
-  },
-  title: {
-    type: String,
     required: true,
+  },
+  name: {
+    type: String,
   },
   avatar: {
     type: String,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  from: {
-    type: String,
-    required: true,
-  },
-  to: {
-    type: String,
-    required: true,
-  },
-  when: {
-    type: String,
-    required: true,
-  },
-  offering: {
-    type: Boolean,
-    required: true,
   },
   likes: [
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'users',
       },
     },
   ],
@@ -49,7 +27,6 @@ const PostSchema = new Schema({
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'users',
       },
       text: {
         type: String,
@@ -61,14 +38,16 @@ const PostSchema = new Schema({
       avatar: {
         type: String,
       },
-      dat: {
+      date: {
         type: Date,
         default: Date.now,
       },
     },
   ],
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-const Post = mongoose.model('post', PostSchema);
-
-module.exports = Post;
+module.exports = mongoose.model('post', PostSchema);

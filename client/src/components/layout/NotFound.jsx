@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
 
-const NotFound = (props) => {
+const NotFound = () => {
   return (
     <Fragment>
       <div className="container">
@@ -13,7 +12,5 @@ const NotFound = (props) => {
     </Fragment>
   );
 };
-
-NotFound.propTypes = {};
 
 export default NotFound;

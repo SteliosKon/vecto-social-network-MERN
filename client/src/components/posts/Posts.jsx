@@ -4,16 +4,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 //  Actions
-import { getAllPosts } from '../../actions/post';
+import { getPosts } from '../../actions/post';
 //  Components
 import PostItem from './PostItem.jsx';
+import PostForm from './PostForm.jsx';
 //  GIF
 import Spinner from '../layout/Spinner';
 
-const Posts = ({ getAllPosts, post: { posts, loading } }) => {
+const Posts = ({ getPosts, post: { posts, loading } }) => {
   useEffect(() => {
-    getAllPosts();
-  }, [getAllPosts]);
+    getPosts();
+  }, [getPosts]);
 
   return (
     <Fragment>
@@ -23,19 +24,20 @@ const Posts = ({ getAllPosts, post: { posts, loading } }) => {
         <Fragment>
           <div className="container">
             {posts.map((post, index) => (
-              <div key={index} className="p-1">
+              <div key={index}>
                 <PostItem key={post._id} post={post}></PostItem>
               </div>
             ))}
           </div>
         </Fragment>
       )}
+      <PostForm />
     </Fragment>
   );
 };
 
 Posts.propTypes = {
-  getAllPosts: PropTypes.func.isRequired,
+  getPosts: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
 };
 
@@ -43,4 +45,4 @@ const mapStateToProps = (state) => ({
   post: state.post,
 });
 
-export default connect(mapStateToProps, { getAllPosts })(Posts);
+export default connect(mapStateToProps, { getPosts })(Posts);
