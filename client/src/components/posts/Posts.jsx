@@ -1,37 +1,29 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-//  Redux
 import { connect } from 'react-redux';
-
-//  Actions
+import PostItem from './PostItem';
+import PostForm from './PostForm';
 import { getPosts } from '../../actions/post';
-//  Components
-import PostItem from './PostItem.jsx';
-import PostForm from './PostForm.jsx';
-//  GIF
-import Spinner from '../layout/Spinner';
 
-const Posts = ({ getPosts, post: { posts, loading } }) => {
+const Posts = ({ getPosts, post: { posts } }) => {
   useEffect(() => {
     getPosts();
   }, [getPosts]);
 
   return (
     <Fragment>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Fragment>
-          <div className="container">
-            {posts.map((post, index) => (
-              <div key={index}>
-                <PostItem key={post._id} post={post}></PostItem>
-              </div>
-            ))}
-          </div>
-        </Fragment>
-      )}
-      <PostForm />
+      <div className="container">
+        <h1 className="large text-primary">Posts</h1>
+        <p className="lead">
+          <i className="fas fa-user" /> Welcome to the community
+        </p>
+        <PostForm />
+        <div className="posts">
+          {posts.map((post) => (
+            <PostItem key={post._id} post={post} />
+          ))}
+        </div>
+      </div>
     </Fragment>
   );
 };
