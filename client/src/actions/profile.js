@@ -72,20 +72,18 @@ export const createProfile = (formData, history, edit = false) => async (
         'Content-Type': 'application/json',
       },
     };
+
     const res = await axios.post('/api/profile', formData, config);
+
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
     });
-    dispatch(
-      setAlert(
-        edit ? 'Profile updated succesfully!' : 'Profile created succesfully!',
-        'success'
-      )
-    );
+
+    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
 
     if (!edit) {
-      history.push('./dashboard');
+      history.push('/dashboard');
     }
   } catch (err) {
     const errors = err.response.data.errors;
@@ -93,6 +91,7 @@ export const createProfile = (formData, history, edit = false) => async (
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
+
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
