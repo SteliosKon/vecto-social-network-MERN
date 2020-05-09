@@ -3,66 +3,122 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
+//  materialUi
+import DeleteIcon from '@material-ui/icons/Delete';
+import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Collapse from '@material-ui/core/Collapse';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import { red } from '@material-ui/core/colors';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+//  Actions
 import { addLike, removeLike, deletePost } from '../../actions/post';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxWidth: 800,
+    backgroundColor: 'white',
+    color: 'black',
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+}));
 
 const PostItem = ({
   addLike,
   removeLike,
   deletePost,
-  auth,
   post: { _id, text, name, avatar, user, likes, comments, date },
+  auth,
   showActions,
-}) => (
-  <div className="post bg-white p-1 my-1">
-    <div>
-      <Link to={`/profile/${user}`}>
-        <img className="round-img" src={avatar} alt="" />
-        <h4>{name}</h4>
-      </Link>
-    </div>
-    <div>
-      <p className="my-1">{text}</p>
-      <p className="post-date">
-        <Moment fromNow>{date}</Moment>
-      </p>
+}) => {
+  //  materialUI
+  const classes = useStyles();
+  const [expanded, setExpanded] = React.useState(false);
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
-      {showActions && (
-        <Fragment>
-          <button
-            onClick={() => addLike(_id)}
-            type="button"
-            className="btn btn-light"
-          >
-            <i className="fas fa-thumbs-up" />{' '}
-            <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
-          </button>
-          <button
-            onClick={() => removeLike(_id)}
-            type="button"
-            className="btn btn-light"
-          >
-            <i className="fas fa-thumbs-down" />
-          </button>
-          <Link to={`/posts/${_id}`} className="btn btn-primary">
-            Discussion{' '}
-            {comments.length > 0 && (
-              <span className="comment-count">{comments.length}</span>
-            )}
-          </Link>
-          {!auth.loading && user === auth.user._id && (
-            <button
-              onClick={() => deletePost(_id)}
-              type="button"
-              className="btn btn-danger"
+  const formatedDate = (
+    <Fragment>
+      <Moment fromNow>{date}</Moment>
+    </Fragment>
+  );
+
+  return (
+    <Fragment>
+      <div className="container">
+        <Card className={classes.root} variant="outlined">
+          <CardHeader
+            avatar={
+              <Link to={`/profile/${user}`}>
+                <Avatar aria-label="profile" className={classes.avatar}>
+                  {name.charAt(0).toUpperCase()}
+                </Avatar>
+              </Link>
+            }
+            action={
+              <IconButton aria-label="settings" onClick={() => deletePost(_id)}>
+                {!auth.loading && user === auth.user._id && <DeleteIcon />}
+              </IconButton>
+            }
+            title={name}
+            subheader={formatedDate}
+          />
+
+          <CardContent>
+            <Typography variant="body1" color="textPrimary" component="p">
+              {text}
+            </Typography>
+          </CardContent>
+          <CardActions disableSpacing>
+            <IconButton onClick={() => addLike(_id)} aria-label="like">
+              <ThumbUpAltOutlinedIcon />
+              <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
+            </IconButton>
+            <IconButton aria-label="dislike" onClick={() => removeLike(_id)}>
+              <ThumbDownAltOutlinedIcon />
+            </IconButton>
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
             >
-              <i className="fas fa-times" />
-            </button>
-          )}
-        </Fragment>
-      )}
-    </div>
-  </div>
-);
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography paragraph>Comments</Typography>
+            </CardContent>
+          </Collapse>
+        </Card>
+      </div>
+    </Fragment>
+  );
+};
 
 PostItem.defaultProps = {
   showActions: true,

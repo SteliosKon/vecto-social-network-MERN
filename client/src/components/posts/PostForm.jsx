@@ -1,44 +1,25 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { addPost } from '../../actions/post';
+import React, { Fragment, useState } from 'react';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import SimpleDialog from './PostDialog.jsx';
 
-const PostForm = ({ addPost }) => {
-  const [text, setText] = useState('');
+export default function SimpleDialogDemo() {
+  const [open, setOpen] = useState(false);
+
+  const onClick = () => {
+    setOpen(!open);
+  };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
   return (
-    <div className='post-form'>
-      <div className='bg-primary p'>
-        <h3>Say Something...</h3>
-      </div>
-      <form
-        className='form my-1'
-        onSubmit={e => {
-          e.preventDefault();
-          addPost({ text });
-          setText('');
-        }}
-      >
-        <textarea
-          name='text'
-          cols='30'
-          rows='5'
-          placeholder='Create a post'
-          value={text}
-          onChange={e => setText(e.target.value)}
-          required
-        />
-        <input type='submit' className='btn btn-dark my-1' value='Submit' />
-      </form>
-    </div>
+    <Fragment>
+      <Fab color="primary" aria-label="add" onClick={onClick}>
+        <AddIcon />
+      </Fab>
+      <SimpleDialog open={open} onClick={onClick} />
+    </Fragment>
   );
-};
-
-PostForm.propTypes = {
-  addPost: PropTypes.func.isRequired
-};
-
-export default connect(
-  null,
-  { addPost }
-)(PostForm);
+}
