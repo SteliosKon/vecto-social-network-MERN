@@ -18,7 +18,7 @@ const Navbar = ({
   const authLinks = (
     <ul>
       <li>
-        <Link to="/posts">Posts</Link>
+        <Link to="/posts">Journeys</Link>
       </li>
       <li>
         <Link to="/dashboard">

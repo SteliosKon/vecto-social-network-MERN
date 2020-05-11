@@ -11,34 +11,38 @@ const User = require('../../models/User');
 // @route    POST api/posts
 // @desc     Create a post
 // @access   Private
-router.post(
-  '/',
-  [auth, [check('text', 'Text is required').not().isEmpty()]],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+router.post('/', auth, async (req, res) => {
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+  //   return res.status(400).json({ errors: errors.array() });
+  // }
 
-    try {
-      const user = await User.findById(req.user.id).select('-password');
+  try {
+    const user = await User.findById(req.user.id).select('-password');
 
-      const newPost = new Post({
-        text: req.body.text,
-        name: user.name,
-        avatar: user.avatar,
-        user: req.user.id,
-      });
+    console.log(req.body.from);
 
-      const post = await newPost.save();
+    const newPost = new Post({
+      text: req.body.text,
+      from: req.body.from,
+      to: req.body.to,
+      travelDate: req.body.travelDate,
+      time: req.body.time,
+      space: req.body.space,
+      type: req.body.type,
+      name: user.name,
+      avatar: user.avatar,
+      user: req.user.id,
+    });
 
-      res.json(post);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }
+    const post = await newPost.save();
+
+    res.json(post);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
   }
-);
+});
 
 // @route    GET api/posts
 // @desc     Get all posts
@@ -201,7 +205,7 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 
     // Pull out comment
     const comment = post.comments.find(
-      (comment) => comment.id === req.params.comment_id
+      (comm) => comm.id === req.params.comment_id
     );
 
     // Make sure comment exists
@@ -216,7 +220,7 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
 
     // Get remove index
     const removeIndex = post.comments
-      .map((comment) => comment.id)
+      .map((comm) => comm.id)
       .indexOf(req.params.comment_id);
 
     post.comments.splice(removeIndex, 1);

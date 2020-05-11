@@ -18,13 +18,14 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
+import Grid from '@material-ui/core/Grid';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 //  Actions
 import { addLike, removeLike, deletePost } from '../../actions/post';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 800,
+    maxWidth: 400,
     backgroundColor: 'white',
     color: 'black',
   },
@@ -47,9 +48,23 @@ const PostItem = ({
   addLike,
   removeLike,
   deletePost,
-  post: { _id, text, name, avatar, user, likes, comments, date },
+  post: {
+    _id,
+    user,
+    name,
+    avatar,
+    date,
+    text,
+    from,
+    to,
+    travelDate,
+    time,
+    space,
+    type,
+    likes,
+    comments,
+  },
   auth,
-  showActions,
 }) => {
   //  materialUI
   const classes = useStyles();
@@ -58,6 +73,16 @@ const PostItem = ({
     setExpanded(!expanded);
   };
 
+  // conditional style
+  let bgColor = {};
+  if (type === '0') {
+    bgColor = { backgroundColor: 'gray' };
+  }
+  if (type === '1') {
+    bgColor = { backgroundColor: 'purple' };
+  }
+
+  // formating date
   const formatedDate = (
     <Fragment>
       <Moment fromNow>{date}</Moment>
@@ -66,8 +91,8 @@ const PostItem = ({
 
   return (
     <Fragment>
-      <div className="container">
-        <Card className={classes.root} variant="outlined">
+      <Grid item xs={12} sm={6} md={4}>
+        <Card className={classes.root} style={bgColor} variant="outlined">
           <CardHeader
             avatar={
               <Link to={`/profile/${user}`}>
@@ -88,6 +113,21 @@ const PostItem = ({
           <CardContent>
             <Typography variant="body1" color="textPrimary" component="p">
               {text}
+            </Typography>
+            <Typography variant="body1" color="textPrimary" component="p">
+              From: {from}
+            </Typography>
+            <Typography variant="body1" color="textPrimary" component="p">
+              To: {to}
+            </Typography>
+            <Typography variant="body1" color="textPrimary" component="p">
+              Date: {travelDate}
+            </Typography>
+            <Typography variant="body1" color="textPrimary" component="p">
+              Time: {time}
+            </Typography>
+            <Typography variant="body1" color="textPrimary" component="p">
+              Availability: {space}
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
@@ -115,13 +155,9 @@ const PostItem = ({
             </CardContent>
           </Collapse>
         </Card>
-      </div>
+      </Grid>
     </Fragment>
   );
-};
-
-PostItem.defaultProps = {
-  showActions: true,
 };
 
 PostItem.propTypes = {
@@ -130,7 +166,6 @@ PostItem.propTypes = {
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
-  showActions: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

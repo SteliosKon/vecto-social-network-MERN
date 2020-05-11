@@ -4,22 +4,74 @@ import { connect } from 'react-redux';
 import { addPost } from '../../actions/post';
 // materialui
 import Dialog from '@material-ui/core/Dialog';
-import { TextField, Button } from '@material-ui/core';
-import PeopleIcon from '@material-ui/icons/People';
-import InputAdornment from '@material-ui/core/InputAdornment';
+import { TextField, Button, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+//  Radio Buttons
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+// Date Picker
+// import 'date-fns';
+// import DateFnsUtils from '@date-io/date-fns';
+// import {
+//   MuiPickersUtilsProvider,
+//   KeyboardTimePicker,
+//   KeyboardDatePicker,
+// } from '@material-ui/pickers';
+
+// How many people fit in the car
+const spaces = [
+  {
+    value: '0',
+    label: '0',
+  },
+  {
+    value: '1',
+    label: '1',
+  },
+  {
+    value: '2',
+    label: '2',
+  },
+  {
+    value: '3',
+    label: '3',
+  },
+  {
+    value: '4',
+    label: '4',
+  },
+];
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: 'theme.spacing(1)',
+      width: '25ch',
+    },
+  },
+  item: {
+    textAlign: 'center',
+    margin: 'auto',
+    width: '50%',
+    padding: '11px',
+  },
+}));
 
 const SimpleDialog = ({ addPost, onClick, open }) => {
+  const classes = useStyles();
+
   const initialState = {
     text: '',
     from: '',
     to: '',
-    date: '',
+    travelDate: '',
     time: '',
     space: '',
     type: '',
   };
   const [formData, setFormData] = useState(initialState);
-  const { text, from, to, date, time, space, type } = formData;
+  const { text, from, to, travelDate, time, space, type } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -29,7 +81,6 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
     e.preventDefault();
     addPost(formData);
     setFormData(initialState);
-    onClick();
   };
 
   console.log(formData);
@@ -37,14 +88,18 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
   return (
     <Fragment>
       <Dialog
-        fullWidth
         onClose={onClick}
         aria-labelledby="simple-dialog-title"
         open={open}
       >
-        <div className="container">
-          <form noValidate onSubmit={(e) => onSubmit(e)}>
-            <div>
+        <form
+          className={classes.root}
+          noValidate
+          autoComplete="off"
+          onSubmit={(e) => onSubmit(e)}
+        >
+          <Grid container justify="center" alignItems="center">
+            <Grid item xs={6} className={classes.item}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -54,9 +109,22 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
                 autoFocus
                 value={from}
                 onChange={(e) => onChange(e)}
+                helperText="This field is mandatory"
               />
-            </div>
-            <div>
+            </Grid>
+
+            <Grid item xs={6} className={classes.item}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                name="travelDate"
+                label="Date"
+                value={travelDate}
+                onChange={(e) => onChange(e)}
+              />
+            </Grid>
+            <Grid item xs={6} className={classes.item}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -66,19 +134,8 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
                 value={to}
                 onChange={(e) => onChange(e)}
               />
-            </div>
-            <div>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                name="date"
-                label="Date"
-                value={date}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={6} className={classes.item}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -88,54 +145,63 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
                 value={time}
                 onChange={(e) => onChange(e)}
               />
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={6} className={classes.item}>
               <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                name="space"
+                id="select-space"
+                select
                 label="Space"
+                name="space"
                 value={space}
                 onChange={(e) => onChange(e)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PeopleIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </div>
-            <div>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
+                helperText="how many people can travel with you"
+              >
+                {spaces.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid item xs={6} className={classes.item}>
+              <RadioGroup
+                className={classes.item}
+                aria-label="Select Type"
                 name="type"
-                label="Type"
                 value={type}
-                onChange={(e) => onChange(e)}
-              />
-            </div>
-            <div>
+                onChange={onChange}
+              >
+                <FormControlLabel
+                  value="0"
+                  control={<Radio />}
+                  label="Offering"
+                />
+                <FormControlLabel
+                  value="1"
+                  control={<Radio />}
+                  label="Asking"
+                />
+              </RadioGroup>
+            </Grid>
+            <Grid item xs={6} className={classes.item}>
               <TextField
-                multiline
                 variant="outlined"
                 margin="normal"
-                required
                 name="text"
                 label="Description"
+                multiline
+                rows={4}
                 value={text}
                 onChange={(e) => onChange(e)}
               />
-            </div>
-
-            <Button type="submit" fullWidth variant="contained" color="primary">
-              Submit
-            </Button>
-          </form>
-        </div>
+            </Grid>
+            <Grid item xs={6} className={classes.item}>
+              <Button type="submit" variant="contained" color="primary">
+                Submit
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
       </Dialog>
     </Fragment>
   );

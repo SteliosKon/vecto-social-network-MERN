@@ -8,7 +8,24 @@ const PostSchema = new Schema({
   },
   text: {
     type: String,
-    required: true,
+  },
+  from: {
+    type: String,
+  },
+  to: {
+    type: String,
+  },
+  travelDate: {
+    type: String,
+  },
+  time: {
+    type: String,
+  },
+  space: {
+    type: String,
+  },
+  type: {
+    type: String,
   },
   name: {
     type: String,
@@ -30,7 +47,6 @@ const PostSchema = new Schema({
       },
       text: {
         type: String,
-        required: true,
       },
       name: {
         type: String,

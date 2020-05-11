@@ -2,8 +2,10 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PostItem from './PostItem';
-import PostForm from './PostForm';
+import AddPostButton from './AddPostButton';
 import { getPosts } from '../../actions/post';
+// materialUi
+import Grid from '@material-ui/core/Grid';
 
 const Posts = ({ getPosts, post: { posts } }) => {
   useEffect(() => {
@@ -13,16 +15,14 @@ const Posts = ({ getPosts, post: { posts } }) => {
   return (
     <Fragment>
       <div className="container">
-        <h1 className="large text-primary">Posts</h1>
-        <p className="lead">
-          <i className="fas fa-user" /> Welcome to the community
-        </p>
-        <PostForm />
-        <div className="posts">
+        <h1 className="large text-primary">Journeys</h1>
+        <p className="lead">Find you next journey</p>
+        <AddPostButton />
+        <Grid container spacing={4}>
           {posts.map((post) => (
             <PostItem key={post._id} post={post} />
           ))}
-        </div>
+        </Grid>
       </div>
     </Fragment>
   );
