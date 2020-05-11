@@ -16,10 +16,12 @@ export default function SimpleDialogDemo() {
 
   return (
     <Fragment>
-      <Fab color="primary" aria-label="add" onClick={onClick}>
-        <AddIcon />
-      </Fab>
-      <SimpleDialog open={open} onClick={onClick} />
+      <div className="container">
+        <Fab color="primary" aria-label="add" onClick={onClick}>
+          <AddIcon />
+        </Fab>
+        <SimpleDialog open={open} onClick={onClick} />
+      </div>
     </Fragment>
   );
 }
