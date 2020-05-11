@@ -12,17 +12,15 @@ export default function AddPostButton() {
 
   return (
     <Fragment>
-      <div className="container">
-        <Fab
-          color="primary"
-          style={{ align: 'center' }}
-          aria-label="add"
-          onClick={onClick}
-        >
-          <AddIcon />
-        </Fab>
-        <SimpleDialog open={open} onClick={onClick} />
-      </div>
+      <Fab
+        color="primary"
+        style={{ align: 'center' }}
+        aria-label="add"
+        onClick={onClick}
+      >
+        <AddIcon />
+      </Fab>
+      <SimpleDialog open={open} onClick={onClick} />
     </Fragment>
   );
 }

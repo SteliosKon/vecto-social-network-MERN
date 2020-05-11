@@ -613,3 +613,11 @@ blockquote {
   border: 0px solid #999;
   page-break-inside: avoid;
 }
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}

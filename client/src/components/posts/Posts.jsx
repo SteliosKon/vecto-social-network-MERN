@@ -6,6 +6,7 @@ import AddPostButton from './AddPostButton';
 import { getPosts } from '../../actions/post';
 // materialUi
 import Grid from '@material-ui/core/Grid';
+import '../../App.css';
 
 const Posts = ({ getPosts, post: { posts } }) => {
   useEffect(() => {
@@ -15,9 +16,23 @@ const Posts = ({ getPosts, post: { posts } }) => {
   return (
     <Fragment>
       <div className="container">
-        <h1 className="large text-primary">Journeys</h1>
-        <p className="lead">Find you next journey</p>
-        <AddPostButton />
+        <Grid
+          spacing={2}
+          container
+          direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item>
+            <h1>Journeys</h1>
+          </Grid>
+          <Grid item>
+            <p>Find your next journey</p>
+          </Grid>
+          <Grid item>
+            <AddPostButton />
+          </Grid>
+        </Grid>
         <Grid container spacing={4}>
           {posts.map((post) => (
             <PostItem key={post._id} post={post} />
