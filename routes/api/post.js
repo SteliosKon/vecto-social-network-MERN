@@ -20,8 +20,6 @@ router.post('/', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
 
-    console.log(req.body.from);
-
     const newPost = new Post({
       text: req.body.text,
       from: req.body.from,

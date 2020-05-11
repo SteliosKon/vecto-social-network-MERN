@@ -109,7 +109,7 @@ export const addExperience = (formData, history) => async (dispatch) => {
       },
     };
     const res = await axios.put('/api/profile/experience', formData, config);
-    console.log('add exp action');
+
     dispatch({
       type: UPDATE_PROFILE,
       payload: res.data,
