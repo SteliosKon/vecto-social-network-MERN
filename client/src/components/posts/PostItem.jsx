@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
@@ -20,14 +20,21 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import Grid from '@material-ui/core/Grid';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 //  Actions
 import { addLike, removeLike, deletePost } from '../../actions/post';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 400,
+    minHeight: 300,
     backgroundColor: 'white',
     color: 'black',
+  },
+  tooltip: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    height: '4.2rem',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -43,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: red[500],
   },
 }));
+
+let isUserAllowedToDeletePost = false;
 
 const PostItem = ({
   addLike,
@@ -66,6 +75,12 @@ const PostItem = ({
   },
   auth,
 }) => {
+  useEffect(() => {
+    user === auth.user._id
+      ? (isUserAllowedToDeletePost = true)
+      : (isUserAllowedToDeletePost = false);
+  });
+
   //  materialUI
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -89,6 +104,10 @@ const PostItem = ({
     </Fragment>
   );
 
+  // console.log(`This is the user:   ${user}`);
+  // console.log('break break break');
+  // console.log(`This is the auth.user._id:  ${auth.user._id}`);
+
   return (
     <Fragment>
       <Grid item xs={12} sm={6} md={4}>
@@ -103,7 +122,7 @@ const PostItem = ({
             }
             action={
               <IconButton aria-label="settings" onClick={() => deletePost(_id)}>
-                {!auth.loading && user === auth.user._id && <DeleteIcon />}
+                {!auth.loading && isUserAllowedToDeletePost && <DeleteIcon />}
               </IconButton>
             }
             title={name}
@@ -111,23 +130,20 @@ const PostItem = ({
           />
 
           <CardContent>
-            <Typography variant="body1" color="textPrimary" component="p">
-              {text}
+            <Typography variant="body1" color="textPrimary">
+              {from && `From: ${from}`}
             </Typography>
-            <Typography variant="body1" color="textPrimary" component="p">
-              From: {from}
+            <Typography variant="body1" color="textPrimary">
+              {to && `To: ${to}`}
             </Typography>
-            <Typography variant="body1" color="textPrimary" component="p">
-              To: {to}
+            <Typography variant="body1" color="textPrimary">
+              {travelDate && `Date: ${travelDate}`}
             </Typography>
-            <Typography variant="body1" color="textPrimary" component="p">
-              Date: {travelDate}
+            <Typography variant="body1" color="textPrimary">
+              {time && `Time: ${time}`}
             </Typography>
-            <Typography variant="body1" color="textPrimary" component="p">
-              Time: {time}
-            </Typography>
-            <Typography variant="body1" color="textPrimary" component="p">
-              Availability: {space}
+            <Typography variant="body1" color="textPrimary">
+              {space && `Availability: ${space}`}
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
@@ -151,7 +167,9 @@ const PostItem = ({
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             <CardContent>
-              <Typography paragraph>Comments</Typography>
+              <Typography variant="body1" color="textPrimary" paragraph>
+                {text}
+              </Typography>
             </CardContent>
           </Collapse>
         </Card>

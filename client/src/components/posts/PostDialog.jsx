@@ -11,14 +11,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
-// Date Picker
-// import 'date-fns';
-// import DateFnsUtils from '@date-io/date-fns';
-// import {
-//   MuiPickersUtilsProvider,
-//   KeyboardTimePicker,
-//   KeyboardDatePicker,
-// } from '@material-ui/pickers';
 
 // How many people fit in the car
 const spaces = [
@@ -52,9 +44,9 @@ const useStyles = makeStyles((theme) => ({
   },
   item: {
     textAlign: 'center',
-    margin: 'auto',
-    width: '50%',
-    padding: '11px',
+
+    width: '30%',
+    padding: '4px',
   },
 }));
 
@@ -83,7 +75,7 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
     setFormData(initialState);
   };
 
-  console.log(formData);
+  // console.log(formData);
 
   return (
     <Fragment>
@@ -92,13 +84,11 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
         aria-labelledby="simple-dialog-title"
         open={open}
       >
-        <form
-          className={classes.root}
-          noValidate
-          autoComplete="off"
-          onSubmit={(e) => onSubmit(e)}
-        >
+        <form noValidate autoComplete="off" onSubmit={(e) => onSubmit(e)}>
           <Grid container justify="center" alignItems="center">
+            <Grid item className={classes.item} xs={12}>
+              <h1>Share your journey with others</h1>
+            </Grid>
             <Grid item xs={6} className={classes.item}>
               <TextField
                 variant="outlined"
@@ -109,10 +99,9 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
                 autoFocus
                 value={from}
                 onChange={(e) => onChange(e)}
-                helperText="This field is mandatory"
+                helperText="Where do you start"
               />
             </Grid>
-
             <Grid item xs={6} className={classes.item}>
               <TextField
                 variant="outlined"
@@ -122,6 +111,7 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
                 label="Date"
                 value={travelDate}
                 onChange={(e) => onChange(e)}
+                helperText="The exact day of journey"
               />
             </Grid>
             <Grid item xs={6} className={classes.item}>
@@ -133,6 +123,7 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
                 label="Destination"
                 value={to}
                 onChange={(e) => onChange(e)}
+                helperText="Where are you going"
               />
             </Grid>
             <Grid item xs={6} className={classes.item}>
@@ -144,17 +135,19 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
                 label="Time"
                 value={time}
                 onChange={(e) => onChange(e)}
+                helperText="What time are you starting"
               />
             </Grid>
             <Grid item xs={6} className={classes.item}>
               <TextField
                 id="select-space"
+                required
                 select
                 label="Space"
                 name="space"
                 value={space}
                 onChange={(e) => onChange(e)}
-                helperText="how many people can travel with you"
+                helperText="How many people can travel with you"
               >
                 {spaces.map((option) => (
                   <MenuItem key={option.value} value={option.value}>
@@ -165,7 +158,6 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
             </Grid>
             <Grid item xs={6} className={classes.item}>
               <RadioGroup
-                className={classes.item}
                 aria-label="Select Type"
                 name="type"
                 value={type}
@@ -193,6 +185,7 @@ const SimpleDialog = ({ addPost, onClick, open }) => {
                 rows={4}
                 value={text}
                 onChange={(e) => onChange(e)}
+                helperText="Fields with * are required"
               />
             </Grid>
             <Grid item xs={6} className={classes.item}>
